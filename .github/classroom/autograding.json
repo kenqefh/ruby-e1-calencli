@@ -1,0 +1,64 @@
+{
+  "tests": [
+    {
+      "name": "Create Event",
+      "setup": "",
+      "run": "ruby calencli/tests/create_test.rb",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 4
+    },
+    {
+      "name": "Show Event",
+      "setup": "",
+      "run": "ruby calencli/tests/show_test.rb",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 3
+    },
+    {
+      "name": "List Events",
+      "setup": "",
+      "run": "ruby calencli/tests/list_test.rb",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 4
+    },
+    {
+      "name": "Update Event",
+      "setup": "",
+      "run": "ruby calencli/tests/update_test.rb",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 4
+    },
+    {
+      "name": "Delete Event",
+      "setup": "",
+      "run": "ruby calencli/tests/delete_test.rb",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "Navigate Weeks",
+      "setup": "",
+      "run": "ruby calencli/tests/navigate_test.rb",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 3
+    }
+  ]
+}
