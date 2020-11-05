@@ -1,0 +1,51 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "*/*_test.rb"
+
+Style/StringLiterals:
+  Description: "Checks if uses of quotes match the configured preference."
+  StyleGuide: "#consistent-string-literals"
+  Enabled: true
+  VersionAdded: "0.9"
+  VersionChanged: "0.36"
+  EnforcedStyle: double_quotes
+  SupportedStyles:
+    - single_quotes
+    - double_quotes
+  # If `true`, strings which span multiple lines using `\` for continuation must
+  # use the same type of quotes on each line.
+  ConsistentQuotesInMultiline: false
+
+Style/FrozenStringLiteralComment:
+  Description: >-
+    Add the frozen_string_literal comment to the top of files
+    to help transition to frozen string literals by default.
+  Enabled: false
+  VersionAdded: "0.36"
+  VersionChanged: "0.79"
+  EnforcedStyle: always
+  SupportedStyles:
+    # `always` will always add the frozen string literal comment to a file
+    # regardless of the Ruby version or if `freeze` or `<<` are called on a
+    # string literal. It is possible that this will create errors.
+    - always
+    # `always_true` will add the frozen string literal comment to a file,
+    # similarly to the `always` style, but will also change any disabled
+    # comments (e.g. `# frozen_string_literal: false`) to be enabled.
+    - always_true
+    # `never` will enforce that the frozen string literal comment does not
+    # exist in a file.
+    - never
+  SafeAutoCorrect: false
+
+Style/Documentation:
+  Description: "Document classes and non-namespace modules."
+  Enabled: false
+  VersionAdded: "0.9"
+  Exclude:
+    - "spec/**/*"
+    - "test/**/*"
+
+Naming/AccessorMethodName:
+  Enabled: false
