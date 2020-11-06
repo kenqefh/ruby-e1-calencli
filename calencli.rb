@@ -8,10 +8,12 @@ require "colorize"
 
 # import Fr
 require_relative "methods/list"
+require_relative "methods/delete"
 
 # Menu
 def menu
   puts "list | create | show | update | delete | next | prev | exit"
+  print "action: "
   gets.chomp
 end
 
@@ -36,7 +38,8 @@ until opcion == "exit"
     menu
 
   when "delete"
-    menu
+    print "Event ID: "
+    delete(gets.chomp.to_i)
 
   when "next"
     menu
