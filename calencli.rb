@@ -7,6 +7,7 @@ require "colorize"
 # Import An
 
 # import Fr
+require_relative "methods/list"
 
 # Menu
 def menu
@@ -20,7 +21,10 @@ until opcion == "exit"
 
   case opcion
   when "list"
-    puts "1"
+    week_munber = DateTime.now.cweek.to_s.to_sym
+    # week_munber = :"47"
+    year = DateTime.now.year.to_s.to_sym
+    list(year, week_munber)
 
   when "create"
     menu
