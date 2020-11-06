@@ -3,10 +3,11 @@ require_relative "data"
 require "colorize"
 
 # Impot Ro
-require_relative "methods/list"
+
 # Import An
 
 # import Fr
+require_relative "methods/list"
 
 # Menu
 def menu
