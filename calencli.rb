@@ -3,7 +3,7 @@ require_relative "data"
 require "colorize"
 
 # Impot Ro
-
+require_relative "methods/list"
 # Import An
 
 # import Fr
@@ -20,7 +20,9 @@ until opcion == "exit"
 
   case opcion
   when "list"
-    puts "1"
+    week_munber = DateTime.now.cweek.to_s.to_sym
+    year = DateTime.now.year.to_s.to_sym
+    list(year, week_munber)
 
   when "create"
     menu
