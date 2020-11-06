@@ -10,6 +10,9 @@ require "colorize"
 require_relative "methods/list"
 require_relative "methods/delete"
 
+# Variables
+@concurrent_date = DateTime.now
+
 # Menu
 def menu
   puts "list | create | show | update | delete | next | prev | exit"
@@ -23,9 +26,8 @@ until opcion == "exit"
 
   case opcion
   when "list"
-    week_munber = DateTime.now.cweek.to_s.to_sym
-    # week_munber = :"47"
-    year = DateTime.now.year.to_s.to_sym
+    week_munber = @concurrent_date.cweek.to_s.to_sym
+    year = @concurrent_date.year.to_s.to_sym
     list(year, week_munber)
 
   when "create"
@@ -42,10 +44,16 @@ until opcion == "exit"
     delete(gets.chomp.to_i)
 
   when "next"
-    menu
+    @concurrent_date += 7
+    week_munber = @concurrent_date.cweek.to_s.to_sym
+    year = @concurrent_date.year.to_s.to_sym
+    list(year, week_munber)
 
   when "prev"
-    menu
+    @concurrent_date -= 7
+    week_munber = @concurrent_date.cweek.to_s.to_sym
+    year = @concurrent_date.year.to_s.to_sym
+    list(year, week_munber)
 
   when "exit"
     menu
