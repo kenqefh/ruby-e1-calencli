@@ -110,26 +110,27 @@ def input_event
   hash_event = [{ id: @id.next, start_date: date_start_end[0], title: "Prueba",
                   calendar: "tech", end_date: date_start_end[1], notes: "", guests: "" }]
   # [num_week: num_week, year: year, hash: hash]
-  [year, num_week, hash_event]
+  # [year, num_week,ash_event]
+  { year: year, num_week: num_week, hash_event: hash_event }
 end
 
 def create_event
   event = input_event
   # p "Event:: #{event}"
   # p " #{event}"
-  if @events.key?(:"#{event[0]}")
-    if @events[:"#{event[0]}"].key?(:"#{event[1]}")
-      @events[:"#{event[0]}"][:"#{event[1]}"].push(event[2])
+  if @events.key?(:"#{event[:year]}")
+    if @events[:"#{event[:year]}"].key?(:"#{event[:num_week]}")
+      @events[:"#{event[:year]}"][:"#{event[:num_week]}"].push(event[:hash_event])
       # puts @events[:"#{year}"][:"#{num_week}"]
     else
-      @events[:"#{event[0]}"][:"#{event[1]}"] = event[2]
+      @events[:"#{event[:year]}"][:"#{event[:num_week]}"] = event[:hash_event]
       # puts @events[:"#{event[0]}"][:"#{event[1]}"]
       # puts "Se creo nueva semana"
     end
   else
     # @events[:"#{year}"] =  "se creo el anio"
     # array = [event[2]]
-    @events[:"#{event[0]}"] = { "#{event[1]}": event[2] }
+    @events[:"#{event[:year]}"] = { "#{event[:num_week]}": event[:hash_event] }
     # puts "@events--> #{@events}"
   end
 end
