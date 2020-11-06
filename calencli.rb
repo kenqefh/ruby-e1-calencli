@@ -11,6 +11,7 @@ require_relative "methods/create_event"
 # Menu
 def menu
   puts "list | create | show | update | delete | next | prev | exit"
+  print "action: "
   gets.chomp
 end
 

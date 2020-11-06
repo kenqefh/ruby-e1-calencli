@@ -37,7 +37,7 @@ end
 #  [valid, start_end]
 # end
 
-def validate_format(start_end)
+def validate_format_time(start_end)
   until start_end.length == 11 || start_end.empty?
     print "Format: 'HH:MM HH:MM' or leave it empty\nstart_end: "
     start_end = gets.chomp
@@ -49,7 +49,7 @@ end
 def validate_hour(dates, start_end)
   valid = false
   until valid == true
-    start_end = validate_format(start_end)
+    start_end = validate_format_time(start_end)
     if !start_end.empty?
       horas = start_end.split(" ")
       # rubocop:disable Style/SymbolProc
@@ -92,7 +92,6 @@ def input_date(input_date, checker)
 end
 
 def input_event
-  # validar_date
   date = input_date("date", false)
   dates = validate_date(date)
   # p "datess: #{dates}"
@@ -108,20 +107,19 @@ def input_event
   num_week = date_start_end[0].cweek.to_s # Numero de semana
   year = date_start_end[0].year.to_s
   # p "start_end: #{start_end} , num_week: #{num_week}"
-  hash = { id: @id.next, start_date: date_start_end[0], title: "Prueba",
-           calendar: "tech", end_date: date_start_end[1], notes: "", guests: "" }
+  hash_event = [{ id: @id.next, start_date: date_start_end[0], title: "Prueba",
+                  calendar: "tech", end_date: date_start_end[1], notes: "", guests: "" }]
   # [num_week: num_week, year: year, hash: hash]
-  [year, num_week, hash]
+  [year, num_week, hash_event]
 end
 
 def create_event
   event = input_event
-  # p "evetn::: #{event}"
+  # p "Event:: #{event}"
   # p " #{event}"
-  # p "event[yea.._>] : #{event[2]}"
   if @events.key?(:"#{event[0]}")
     if @events[:"#{event[0]}"].key?(:"#{event[1]}")
-      @events[:"#{event[0]}"][:"#{event[1]}"].push(hash)
+      @events[:"#{event[0]}"][:"#{event[1]}"].push(event[2])
       # puts @events[:"#{year}"][:"#{num_week}"]
     else
       @events[:"#{event[0]}"][:"#{event[1]}"] = event[2]
@@ -130,8 +128,9 @@ def create_event
     end
   else
     # @events[:"#{year}"] =  "se creo el anio"
-    @events[:"#{event[0]}"] = [:"#{event[1]}"].push(event[2])
-    # puts "Se creo anio:  #{@events[:"#{event[0]}"]} "
+    # array = [event[2]]
+    @events[:"#{event[0]}"] = { "#{event[1]}": event[2] }
+    # puts "@events--> #{@events}"
   end
 end
 
