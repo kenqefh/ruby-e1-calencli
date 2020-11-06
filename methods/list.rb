@@ -1,11 +1,11 @@
-@days = %w[sunday monday tuesday wednesday thursday friday saturday]
+@days = %w[monday tuesday wednesday thursday friday saturday sunday]
 
 def list(year, week_munber)
   # get all events for week
   data_week = @events[year][week_munber]
 
   # sort elements by day and end_date
-  data_week = get_events_by_day(data_week)
+  data_week = get_events_by_day(data_week, year, week_munber)
 
   # Print calenCLI
   just_space = 15
@@ -14,16 +14,24 @@ def list(year, week_munber)
   print_days(data_week, just_space, line_break)
 end
 
-def get_events_by_day(data_week)
+def get_events_by_day(data_week, year, week_number)
   @days.each_with_object({}) do |day, accumulator|
-    accumulator[day] = []
+    day_title = get_title_day(year, week_number, day)
+    accumulator[day_title] = []
 
     if data_week.is_a?(Array)
-      accumulator[day] = data_week.select { |event| event[:start_date].strftime("%A").downcase.eql?(day) }
-      sort_events_by_day(accumulator[day])
+      accumulator[day_title] = data_week.select { |event| event[:start_date].strftime("%A").downcase.eql?(day) }
+      sort_events_by_day(accumulator[day_title])
     end
     accumulator
   end
+end
+
+def get_title_day(year, week_number, day)
+  date_value = "#{year}-W#{week_number}-#{@days.index(day) + 1}"
+  date_format = "%G-W%V-%u"
+  new_date = DateTime.strptime(date_value, date_format)
+  new_date.strftime("%a %b %d")
 end
 
 def sort_events_by_day(events)
