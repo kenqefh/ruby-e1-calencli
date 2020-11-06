@@ -21,6 +21,7 @@ until opcion == "exit"
   case opcion
   when "list"
     week_munber = DateTime.now.cweek.to_s.to_sym
+    # week_munber = :"47"
     year = DateTime.now.year.to_s.to_sym
     list(year, week_munber)
 
