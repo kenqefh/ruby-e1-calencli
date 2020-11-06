@@ -1,4 +1,17 @@
 @days = %w[monday tuesday wednesday thursday friday saturday sunday]
+@colors = {
+  "default" => :black,
+  "title_day" => :yellow,
+  "no_events" => :light_black,
+  "tech" => :red,
+  "english" => :magenta,
+  "soft skills" => :green
+}
+
+@colors_avalible = %i[light_red light_green light_yellow blue light_blue light_magenta cyan light_cyan]
+
+# :black, :light_black, :red, :light_red, :green, :light_green, :yellow, :light_yellow, :blue, :light_blue,
+# :magenta, :light_magenta, :cyan, :light_cyan, :white, :light_white, :default]
 
 def list(year, week_munber)
   # get all events for week
@@ -43,27 +56,38 @@ def print_days(week_by_day, just_space = 15, line_break = "\n")
     print_day_date(day, just_space)
 
     if events.empty?
-      puts "#{' ' * just_space}No events#{line_break * 2}"
+      puts colorize_string("no_events", "#{' ' * just_space}No events")
     else
-      print_day_events(events, just_space, line_break)
+      print_day_events(events, just_space)
     end
+    puts line_break
   end
 end
 
 def print_day_date(day_not_formatted, just_space)
   day_formatted = day_not_formatted.ljust(just_space, " ")
-  print day_formatted.colorize(:blue)
+  print colorize_string("title_day", day_formatted)
 end
 
-def print_day_events(day_events, just_space, line_break)
+def print_day_events(day_events, just_space)
+  details = ""
+
   day_events.map do |event|
+    details = details.empty? ? "" : " " * just_space
     hour = ""
     if event[:end_date].is_a?(Date)
       hour << event[:start_date].strftime("%H:%M") << " - " << event[:end_date].strftime("%H:%M")
     end
-    hour = hour.ljust(just_space, " ")
-
-    print "#{hour}#{event[:title]} (#{event[:id]})#{line_break}#{' ' * just_space}"
+    details << hour.ljust(just_space, " ") << event[:title]
+    # puts "#{colorize_string(event[:calendar], details)} #{colorize_string('default', '(' << event[:id].to_s << ')')}"
   end
-  print line_break
+end
+
+def colorize_string(color, description)
+  update_color(color) unless @colors.key?(color)
+  description.colorize(@colors[color])
+end
+
+def update_color(calendar)
+  print calendar
 end
