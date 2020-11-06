@@ -18,8 +18,8 @@ def validate_date(date)
   dates
 end
 
-def date_time(dates, time)
-  # p ">>entro a date_time :: #{dates}"
+def get_date_time(dates, time)
+  # p ">>entro a get_date_time :: #{dates}"
   DateTime.new(dates[:year], dates[:mon], dates[:mday], time[0], time[1], 0)
 end
 
@@ -60,8 +60,8 @@ def validate_hour(dates, start_end)
       start_time = 0
       end_time = 0
     end
-    start_date = date_time(dates, start_time)
-    end_date   = date_time(dates, end_time)
+    start_date = get_date_time(dates, start_time)
+    end_date   = get_date_time(dates, end_time)
     # valid = validate_hour_compare(start_date, end_date)[0]
     # start_end = validate_hour_compare(start_date, end_date)[1]# NOS QUEDAMOS ACA BUSCANDO VALIDAR las hroas
     # p "valid: #{valid}"
@@ -94,14 +94,11 @@ end
 def input_event
   date = input_date("date", false)
   dates = validate_date(date)
-  # p "datess: #{dates}"
   ## title = input_date("title",true)
   ## calendar = input_date("calendar",false)
-  # validar hora
   print "start_end: "
   start_end = gets.chomp
   date_start_end = validate_hour(dates, start_end)
-  # p date_start_end
   ## notes = input_date("notes",false)
   ## guests = input_date("guests",false)
   num_week = date_start_end[0].cweek.to_s # Numero de semana
@@ -109,7 +106,6 @@ def input_event
   # p "start_end: #{start_end} , num_week: #{num_week}"
   hash_event = [{ id: @id.next, start_date: date_start_end[0], title: "Prueba",
                   calendar: "tech", end_date: date_start_end[1], notes: "", guests: "" }]
-  # [num_week: num_week, year: year, hash: hash]
   # [year, num_week,ash_event]
   { year: year, num_week: num_week, hash_event: hash_event }
 end
