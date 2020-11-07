@@ -3,7 +3,7 @@ require_relative "data"
 require "colorize"
 
 # Impot Ro
-
+require_relative "methods/create_event"
 # Import An
 
 # import Fr
@@ -21,6 +21,10 @@ def menu
   gets.chomp
 end
 
+# def create_events
+
+# end
+
 opcion = nil
 until opcion == "exit"
   opcion = menu
@@ -32,8 +36,8 @@ until opcion == "exit"
     list(year, week_munber)
 
   when "create"
-    menu
-
+    create_event
+    # menu
   when "show"
     week_munber = @concurrent_date.cweek.to_s.to_sym
     year = @concurrent_date.year.to_s.to_sym
