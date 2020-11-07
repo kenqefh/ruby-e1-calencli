@@ -120,8 +120,6 @@ end
 
 # Print days vertical
 def print_days_vertical(data_week, just_space, _line_break)
-  # line = "+"
-
   print_days_vertical_header_footer
 
   print_days_vertical_header(data_week, just_space)
@@ -152,6 +150,12 @@ def print_days_vertical_header_show(week_day, day_date, spaces, divider)
   print_days_vertical_header_footer
   puts day_date << divider
   puts spaces << divider
+end
+
+def print_days_vertical_body(data_week, _just_space, _divider = "|")
+  data_week.each_value do |day|
+    p day
+  end
 end
 
 def print_days_vertical_header_footer(character = "-", length = 10, times = 7, divider = "+")
