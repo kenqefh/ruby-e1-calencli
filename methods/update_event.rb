@@ -4,17 +4,11 @@ def update(id_event)
   event = reference_event_by_id(id_event)
   return if event.nil?
 
-  # p "event: #{event}"
-  # update
   event_temp = input_event[:h_event]
   event_temp[:id] = id_event
   event[:event] = event_temp
-  # p "event_modificado: #{event[:event]}"
-  # delete event
   delete(id_event)
-  # create event
   create_event({ year: event[:year], num_week: event[:week], h_event: event[:event] })
-  # p "anio: #{id_event} | anio: #{event[:year]} | eventfinal. #{ @events[event[:year]][event[:week]] }"
 end
 
 def reference_event_by_id(id_event)
