@@ -33,25 +33,25 @@ def validate_hour_compare(start_date, end_date)
 end
 
 def get_date_time(dates, time)
-  DateTime.new(dates[:year], dates[:mon], dates[:mday], time[0], time[1], 0)
-end
-
-def get_start_end_time(start_end)
-  if !start_end.empty?
-    horas = start_end.split(" ")
-    # rubocop:disable Style/SymbolProc
-    start_time = horas[0].split(":").map { |h| h.to_i }
-    end_time = horas[1].split(":").map { |h| h.to_i }
-    # rubocop:enable Style/SymbolProc
+  if time.empty?
+    DateTime.new(dates[:year], dates[:mon], dates[:mday])
   else
-    start_time = 0
-    end_time = 0
+    DateTime.new(dates[:year], dates[:mon], dates[:mday], time[0], time[1], 0)
   end
-
-  [start_time, end_time]
 end
 
-def validate_format_time
+def get_date_start_end(dates, start_end)
+  horas = start_end.split(" ")
+  # rubocop:disable Style/SymbolProc
+  start_time = horas[0].split(":").map { |h| h.to_i }
+  end_time = horas[1].split(":").map { |h| h.to_i }
+  # rubocop:enable Style/SymbolProc
+  start_date = get_date_time(dates, start_time)
+  end_date = get_date_time(dates, end_time)
+  [start_date, end_date]
+end
+
+def get_format_time_validate
   print "start_end: ".rjust(15, " ")
   start_end = gets.chomp
   until start_end.length == 11 || start_end.empty?
@@ -62,17 +62,22 @@ def validate_format_time
   start_end
 end
 
+# rubocop:disable Metrics/MethodLength
 def validate_hour(dates)
   valid = false
   until valid == true
-    start_end = validate_format_time
-    start_end_time = get_start_end_time(start_end)
-    start_date = get_date_time(dates, start_end_time[0])
-    end_date   = get_date_time(dates, start_end_time[1])
-    valid = validate_hour_compare(start_date, end_date)
+    start_end = get_format_time_validate
+    if start_end == ""
+      start_end_date = [get_date_time(dates, ""), ""]
+      valid = true
+    else
+      start_end_date = get_date_start_end(dates, start_end)
+      valid = validate_hour_compare(start_end_date[0], start_end_date[1]) # True or False
+    end
   end
-  [start_date, end_date]
+  { start_date: start_end_date[0], end_date: start_end_date[1] }
 end
+# rubocop:enable Metrics/MethodLength
 # End Validator Hour
 
 def input_date_guests
@@ -99,15 +104,13 @@ def input_event
   dates = validate_date(date)
   ## title = input_date("title",true)
   ## calendar = input_date("calendar",false)
-  date_start_end = validate_hour(dates)
+  d_start_end = validate_hour(dates)
   ## notes = input_date("notes",false)
   guests = input_date_guests
-  # year = date_start_end[0].year.to_s # se puede optimizar decalrando defrente en el hash de salida
-  # num_week = date_start_end[0].cweek.to_s # Numero de semana
-  # p "start_end: #{start_end} , num_week: #{num_week}"
-  hash_event = { id: @id += 1, start_date: date_start_end[0], title: "Prueba",
-                 calendar: "tech", end_date: date_start_end[1], notes: "", guests: guests }
-  { year: current_year(date_start_end[0]), num_week: current_week(date_start_end[0]), hash_event: hash_event }
+
+  h_event = { id: @id += 1, start_date: d_start_end[:start_date], title: "Prueba",
+              calendar: "tech", end_date: d_start_end[:end_date], notes: "", guests: guests }
+  { year: current_year(d_start_end[:start_date]), num_week: current_week(d_start_end[:start_date]), h_event: h_event }
 end
 
 def create_event
@@ -115,21 +118,12 @@ def create_event
   # p "Event:: #{event}"
   if @events.key?(:"#{event[:year]}")
     if @events[:"#{event[:year]}"].key?(:"#{event[:num_week]}")
-      @events[:"#{event[:year]}"][:"#{event[:num_week]}"].push(event[:hash_event])
-      # puts "@events--> #{ @events[:"#{event[:year]}"]}"
-      # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
+      @events[:"#{event[:year]}"][:"#{event[:num_week]}"].push(event[:h_event])
     else
-      @events[:"#{event[:year]}"][:"#{event[:num_week]}"] = event[:hash_event]
-      # puts "@events--> #{ @events[:"#{event[:year]}"]}"
-      # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
-      # puts "Se creo nueva semana"
+      @events[:"#{event[:year]}"][:"#{event[:num_week]}"] = event[:h_event]
     end
   else
-    # @events[:"#{year}"] =  "se creo el anio"
-    # array = [event[2]]
-    @events[:"#{event[:year]}"] = { "#{event[:num_week]}": event[:hash_event] }
-    # puts "@events--> #{ @events[:"#{event[:year]}"]}"
-    # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
+    @events[:"#{event[:year]}"] = { "#{event[:num_week]}": event[:h_event] }
   end
   # puts "@events--> #{ @events[:"#{event[:year]}"]}"
   # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
