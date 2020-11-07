@@ -101,14 +101,12 @@ def input_event
   d_start_end = validate_hour(dates)
   notes = input_date("notes", false)
   guests = input_date_guests
-
   h_event = { id: @id += 1, start_date: d_start_end[:start_date], title: title,
               calendar: calendar, end_date: d_start_end[:end_date], notes: notes, guests: guests }
   { year: current_year(d_start_end[:start_date]), num_week: current_week(d_start_end[:start_date]), h_event: h_event }
 end
 
 def create_event(event)
-  # event = input_event
   if @events.key?(:"#{event[:year]}")
     if @events[:"#{event[:year]}"].key?(:"#{event[:num_week]}")
       @events[:"#{event[:year]}"][:"#{event[:num_week]}"].push(event[:h_event])
