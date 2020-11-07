@@ -2,11 +2,11 @@
 # give id: 1 , return [id:1 , start_date : "12:00"....]
 
 def find_by_id(id)
-  @events.each do |_, week|
-    week.each do |_, event|
-      event.each do |item_event|
-        item_event.each do |_, y|
-          return item_event if y == id
+  @events.each_value do |weeks|
+    weeks.each_value do |events|
+      events.each do |item_events|
+        item_events.each_value do |item|
+          return item_events if item == id
         end
       end
     end
