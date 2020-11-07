@@ -104,8 +104,8 @@ def input_event
   num_week = date_start_end[0].cweek.to_s # Numero de semana
   year = date_start_end[0].year.to_s
   # p "start_end: #{start_end} , num_week: #{num_week}"
-  hash_event = [{ id: @id.next, start_date: date_start_end[0], title: "Prueba",
-                  calendar: "tech", end_date: date_start_end[1], notes: "", guests: "" }]
+  hash_event = { id: @id.next, start_date: date_start_end[0], title: "Prueba",
+                 calendar: "tech", end_date: date_start_end[1], notes: "", guests: "" }
   # [year, num_week,ash_event]
   { year: year, num_week: num_week, hash_event: hash_event }
 end
@@ -117,17 +117,20 @@ def create_event
   if @events.key?(:"#{event[:year]}")
     if @events[:"#{event[:year]}"].key?(:"#{event[:num_week]}")
       @events[:"#{event[:year]}"][:"#{event[:num_week]}"].push(event[:hash_event])
-      # puts @events[:"#{year}"][:"#{num_week}"]
+      # puts "@events--> #{ @events[:"#{event[:year]}"]}"
+      # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
     else
       @events[:"#{event[:year]}"][:"#{event[:num_week]}"] = event[:hash_event]
-      # puts @events[:"#{event[0]}"][:"#{event[1]}"]
+      # puts "@events--> #{ @events[:"#{event[:year]}"]}"
+      # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
       # puts "Se creo nueva semana"
     end
   else
     # @events[:"#{year}"] =  "se creo el anio"
     # array = [event[2]]
     @events[:"#{event[:year]}"] = { "#{event[:num_week]}": event[:hash_event] }
-    # puts "@events--> #{@events}"
+    # puts "@events--> #{ @events[:"#{event[:year]}"]}"
+    # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
   end
 end
 
