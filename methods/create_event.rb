@@ -115,8 +115,6 @@ def create_event(event)
   else
     @events[:"#{event[:year]}"] = { "#{event[:num_week]}": event[:h_event] }
   end
-  # p "create_event>> anio: #{event[:year]}, week: #{event[:num_week]},
-  # @events--> #{ @events[:"#{event[:year]}"] } , semans: #{ @events[:"#{event[:year]}"].keys }"
 end
 
 # rubocop:enable Metrics/AbcSize
