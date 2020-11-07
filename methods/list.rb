@@ -11,7 +11,7 @@
 }
 
 # For assign colors automatically to new calendar styles
-@colors_avalible = %i[magenta light_red light_green light_yellow blue light_blue light_magenta cyan light_cyan]
+@colors_avalible = %i[magenta light_blue cyan light_magenta light_cyan light_red light_green light_yellow blue]
 
 # :black, :light_black, :red, :light_red, :green, :light_green, :yellow, :light_yellow, :blue, :light_blue,
 # :magenta, :light_magenta, :cyan, :light_cyan, :white, :light_white, :default]
@@ -27,7 +27,6 @@ def list(year, week_munber)
   # Print calenCLI
   just_space = 15
   line_break = "\n"
-  puts "#{'-' * 35}CalenCLI#{'-' * 35}#{line_break * 2}"
   print_days(data_week, just_space, line_break)
 end
 
