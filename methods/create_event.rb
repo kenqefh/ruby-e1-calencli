@@ -104,7 +104,7 @@ def input_event
   num_week = date_start_end[0].cweek.to_s # Numero de semana
   year = date_start_end[0].year.to_s
   # p "start_end: #{start_end} , num_week: #{num_week}"
-  hash_event = { id: @id.next, start_date: date_start_end[0], title: "Prueba",
+  hash_event = { id: @id += 1, start_date: date_start_end[0], title: "Prueba",
                  calendar: "tech", end_date: date_start_end[1], notes: "", guests: "" }
   # [year, num_week,ash_event]
   { year: year, num_week: num_week, hash_event: hash_event }
