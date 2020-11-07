@@ -4,6 +4,7 @@ require "colorize"
 
 # Impot Ro
 require_relative "methods/create_event"
+require_relative "methods/update_event"
 # Import An
 
 # import Fr
@@ -36,8 +37,9 @@ until opcion == "exit"
     list(year, week_munber)
 
   when "create"
-    create_event
-    # menu
+    event = input_event
+    create_event(event)
+
   when "show"
     week_munber = @concurrent_date.cweek.to_s.to_sym
     year = @concurrent_date.year.to_s.to_sym
@@ -46,7 +48,8 @@ until opcion == "exit"
     show(id)
 
   when "update"
-    menu
+    print "Event ID: "
+    update(gets.chomp.to_i)
 
   when "delete"
     print "Event ID: "
