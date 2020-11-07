@@ -42,8 +42,8 @@ until opcion == "exit"
     week_munber = @concurrent_date.cweek.to_s.to_sym
     year = @concurrent_date.year.to_s.to_sym
     print "Event ID :"
-    a = gets.to_i
-    show(a)
+    id = gets.to_i
+    show(id)
 
   when "update"
     menu
