@@ -38,14 +38,13 @@ until opcion == "exit"
   when "create"
     event = input_event
     create_event(event)
-    # menu
+
   when "show"
     menu
 
   when "update"
     print "Event ID: "
     update(gets.chomp.to_i)
-    menu
 
   when "delete"
     print "Event ID: "

@@ -19,10 +19,3 @@ def reference_event_by_id(id_event)
   end
 end
 
-def find_event_by_id(id_event)
-  @events.each do |_, weeks|
-    weeks.each do |_, events|
-      events.each { |event| return event if event[:id] == id_event }
-    end
-  end
-end
