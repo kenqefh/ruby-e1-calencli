@@ -8,7 +8,6 @@ def update(id_event)
   event_temp = input_event
   event_temp[:h_event][:id] = id_event
   event = event_temp[:h_event]
-  p "ano: #{event_temp[:year]}, week: #{event_temp[:num_week]}, evento ##{event}"
   create_event({ year: event_temp[:year], num_week: event_temp[:num_week], h_event: event })
 end
 

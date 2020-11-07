@@ -17,7 +17,6 @@ def validate_date(date)
   dates
 end
 
-# Start Validator Hour
 def validate_hour_compare(start_date, end_date)
   if start_date <= end_date
     valid = true
@@ -116,7 +115,6 @@ def create_event(event)
   else
     @events[:"#{event[:year]}"] = { "#{event[:num_week]}": event[:h_event] }
   end
-  # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
 end
 
 # rubocop:enable Metrics/AbcSize
