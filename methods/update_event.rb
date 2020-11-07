@@ -1,7 +1,9 @@
 def update(id_event)
   return unless id_event.positive?
+
   event = reference_event_by_id(id_event)
   return if event.nil?
+
   # p "event: #{event}"
   # update
   event_temp = input_event[:h_event]
@@ -12,11 +14,11 @@ def update(id_event)
   delete(id_event)
   # create event
   create_event({ year: event[:year], num_week: event[:week], h_event: event[:event] })
-   p "anio: #{id_event} | anio: #{event[:year]} | eventfinal. #{ @events[event[:year]][event[:week]] }"
+  # p "anio: #{id_event} | anio: #{event[:year]} | eventfinal. #{ @events[event[:year]][event[:week]] }"
 end
 
 def reference_event_by_id(id_event)
-  @events.each do | keya, weeks|
+  @events.each do |keya, weeks|
     weeks.each do |keyw, events|
       events.each { |event| return { event: event, year: keya, week: keyw } if event[:id] == id_event }
     end
