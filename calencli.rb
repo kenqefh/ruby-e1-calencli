@@ -4,6 +4,7 @@ require "colorize"
 
 # Impot Ro
 require_relative "methods/create_event"
+require_relative "methods/update_event"
 # Import An
 
 # import Fr
@@ -41,6 +42,8 @@ until opcion == "exit"
     menu
 
   when "update"
+    print "Event ID: "
+    update(gets.chomp.to_i)
     menu
 
   when "delete"
