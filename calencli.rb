@@ -9,6 +9,7 @@ require_relative "methods/create_event"
 # import Fr
 require_relative "methods/list"
 require_relative "methods/delete"
+require_relative "methods/show"
 
 # Variables
 @concurrent_date = DateTime.now
@@ -38,7 +39,11 @@ until opcion == "exit"
     create_event
     # menu
   when "show"
-    menu
+    week_munber = @concurrent_date.cweek.to_s.to_sym
+    year = @concurrent_date.year.to_s.to_sym
+    print "Event ID :"
+    id = gets.to_i
+    show(id)
 
   when "update"
     menu
