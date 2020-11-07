@@ -29,6 +29,9 @@ def list(year, week_munber)
   line_break = "\n"
   puts "#{'-' * 35}CalenCLI#{'-' * 35}#{line_break * 2}"
   print_days(data_week, just_space, line_break)
+
+  just_space = 10
+  print_days_vertical(data_week, just_space, line_break)
 end
 
 # Get all events of the week in given year
@@ -51,7 +54,7 @@ def get_title_day(year, week_number, day)
   date_value = "#{year}-W#{week_number}-#{@days.index(day) + 1}"
   date_format = "%G-W%V-%u"
   new_date = DateTime.strptime(date_value, date_format)
-  new_date.strftime("%a %b %d")
+  new_date.strftime("%A %b %d")
 end
 
 def sort_events_by_day(events)
@@ -74,6 +77,9 @@ end
 
 # To print day header, example:  Fri Nov 06
 def print_day_date(day_not_formatted, just_space)
+  day_not_formatted = day_not_formatted.split
+  day_not_formatted[0] = day_not_formatted[0][0, 3]
+  day_not_formatted = day_not_formatted.join(" ")
   day_formatted = day_not_formatted.ljust(just_space, " ")
   print colorize_string("title_day", day_formatted)
 end
@@ -110,4 +116,48 @@ def update_color(calendar)
   color = @colors_avalible.shift
   color = :default if color.nil?
   @colors[calendar] = color
+end
+
+# Print days vertical
+def print_days_vertical(data_week, just_space, _line_break)
+  # line = "+"
+
+  print_days_vertical_header_footer
+
+  print_days_vertical_header(data_week, just_space)
+  puts "content..."
+  print_days_vertical_header_footer
+end
+
+def print_days_vertical_header(data_week, just_space, divider = "|")
+  week_day = ""
+  day_date = ""
+  spaces = ""
+  data_week.each_key do |title|
+    title = title.split
+    print_days_vertical_header_save(title, week_day, day_date, spaces, [just_space, divider])
+  end
+  print_days_vertical_header_show(week_day, day_date, spaces, divider)
+end
+
+def print_days_vertical_header_save(title, week_day, day_date, spaces, justify)
+  just_space, divider = *justify
+  week_day << colorize_string("title_day", title[0].ljust(just_space, " ")).prepend(divider)
+  day_date << colorize_string("title_day", (title[2] << " " << title[1]).ljust(just_space, " ")).prepend(divider)
+  spaces << divider << " " * just_space
+end
+
+def print_days_vertical_header_show(week_day, day_date, spaces, divider)
+  puts week_day << divider
+  print_days_vertical_header_footer
+  puts day_date << divider
+  puts spaces << divider
+end
+
+def print_days_vertical_header_footer(character = "-", length = 10, times = 7, divider = "+")
+  content = character * length
+  content.prepend(divider)
+  content *= times
+  content << divider
+  puts content
 end
