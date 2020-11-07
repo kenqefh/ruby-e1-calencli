@@ -47,12 +47,12 @@ end
 
 def show(id)
   data_select = find_by_id(id)
-  if data_select != ""
+  if data_select == ""
+    ""
+  else
     puts "#{print_key(@date, @justify_step)} : #{data_select[:start_date].strftime(@format_date)}"
     data_select.each do |x, y|
       puts "#{print_key(x.to_s, 12)} : #{print_value(y)}" if x != :id
     end
-  else
-    ""
   end
 end
