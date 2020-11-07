@@ -75,6 +75,13 @@ def validate_hour(dates)
 end
 # End Validator Hour
 
+def input_date_guests
+  guest = input_date("guests", false)
+  # rubocop:disable Style/SymbolProc
+  guest.split(",").map { |g| g.strip }
+  # rubocop:enable Style/SymbolProc
+end
+
 def input_date(input_date, checker)
   label = input_date
   print "#{label}: ".rjust(15, " ")
@@ -94,12 +101,12 @@ def input_event
   ## calendar = input_date("calendar",false)
   date_start_end = validate_hour(dates)
   ## notes = input_date("notes",false)
-  ## guests = input_date("guests",false)
+  guests = input_date_guests
   # year = date_start_end[0].year.to_s # se puede optimizar decalrando defrente en el hash de salida
   # num_week = date_start_end[0].cweek.to_s # Numero de semana
   # p "start_end: #{start_end} , num_week: #{num_week}"
   hash_event = { id: @id += 1, start_date: date_start_end[0], title: "Prueba",
-                 calendar: "tech", end_date: date_start_end[1], notes: "", guests: "" }
+                 calendar: "tech", end_date: date_start_end[1], notes: "", guests: guests }
   { year: current_year(date_start_end[0]), num_week: current_week(date_start_end[0]), hash_event: hash_event }
 end
 
@@ -124,6 +131,8 @@ def create_event
     # puts "@events--> #{ @events[:"#{event[:year]}"]}"
     # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
   end
+  # puts "@events--> #{ @events[:"#{event[:year]}"]}"
+  # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
 end
 
 # rubocop:enable Metrics/AbcSize
