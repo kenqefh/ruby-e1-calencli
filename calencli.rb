@@ -9,6 +9,7 @@ require "colorize"
 # import Fr
 require_relative "methods/list"
 require_relative "methods/delete"
+require_relative "methods/show"
 
 # Variables
 @concurrent_date = DateTime.now
@@ -34,7 +35,11 @@ until opcion == "exit"
     menu
 
   when "show"
-    menu
+    week_munber = @concurrent_date.cweek.to_s.to_sym
+    year = @concurrent_date.year.to_s.to_sym
+    print "Event ID :"
+    a = gets.to_i
+    show(a)
 
   when "update"
     menu
