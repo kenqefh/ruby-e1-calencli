@@ -118,6 +118,7 @@ def create_event
   else
     @events[:"#{event[:year]}"] = { "#{event[:num_week]}": event[:h_event] }
   end
+  # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
 end
 
 # rubocop:enable Metrics/AbcSize
