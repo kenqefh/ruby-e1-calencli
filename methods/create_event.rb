@@ -1,5 +1,4 @@
 # rubocop:disable Metrics/AbcSize
-
 def current_year(date)
   date.year
 end
@@ -22,11 +21,8 @@ end
 def validate_hour_compare(start_date, end_date)
   if start_date <= end_date
     valid = true
-    puts "se valido fechas"
   else
     puts "Cannot end before start "
-    # start_end = gets.chomp
-    # puts "vali: #{valid}"
     valid = false
   end
   valid
@@ -78,7 +74,6 @@ def validate_hour(dates)
   { start_date: start_end_date[0], end_date: start_end_date[1] }
 end
 # rubocop:enable Metrics/MethodLength
-# End Validator Hour
 
 def input_date_guests
   guest = input_date("guests", false)
@@ -93,7 +88,6 @@ def input_date(input_date, checker)
   input_date = gets.chomp
   while input_date == "" && checker
     print "Cannot be blank\n#{label}: ".rjust(15, " ")
-    # print "title: "
     input_date = gets.chomp
   end
   input_date
@@ -102,20 +96,19 @@ end
 def input_event
   date = input_date("date", false)
   dates = validate_date(date)
-  ## title = input_date("title",true)
-  ## calendar = input_date("calendar",false)
+  title = input_date("title", true)
+  calendar = input_date("calendar", false)
   d_start_end = validate_hour(dates)
-  ## notes = input_date("notes",false)
+  notes = input_date("notes", false)
   guests = input_date_guests
 
-  h_event = { id: @id += 1, start_date: d_start_end[:start_date], title: "Prueba",
-              calendar: "tech", end_date: d_start_end[:end_date], notes: "", guests: guests }
+  h_event = { id: @id += 1, start_date: d_start_end[:start_date], title: title,
+              calendar: calendar, end_date: d_start_end[:end_date], notes: notes, guests: guests }
   { year: current_year(d_start_end[:start_date]), num_week: current_week(d_start_end[:start_date]), h_event: h_event }
 end
 
 def create_event
   event = input_event
-  # p "Event:: #{event}"
   if @events.key?(:"#{event[:year]}")
     if @events[:"#{event[:year]}"].key?(:"#{event[:num_week]}")
       @events[:"#{event[:year]}"][:"#{event[:num_week]}"].push(event[:h_event])
@@ -125,8 +118,6 @@ def create_event
   else
     @events[:"#{event[:year]}"] = { "#{event[:num_week]}": event[:h_event] }
   end
-  # puts "@events--> #{ @events[:"#{event[:year]}"]}"
-  # puts "@events--> #{ @events[:"#{event[:year]}"][:"#{event[:num_week]}"] }"
 end
 
 # rubocop:enable Metrics/AbcSize
