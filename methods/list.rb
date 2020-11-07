@@ -4,11 +4,10 @@
   "title_day" => :yellow,
   "no_events" => :light_black,
   "tech" => :red,
-  "english" => :magenta,
   "soft skills" => :green
 }
 
-@colors_avalible = %i[light_red light_green light_yellow blue light_blue light_magenta cyan light_cyan]
+@colors_avalible = %i[magenta light_red light_green light_yellow blue light_blue light_magenta cyan light_cyan]
 
 # :black, :light_black, :red, :light_red, :green, :light_green, :yellow, :light_yellow, :blue, :light_blue,
 # :magenta, :light_magenta, :cyan, :light_cyan, :white, :light_white, :default]
@@ -74,13 +73,18 @@ def print_day_events(day_events, just_space)
 
   day_events.map do |event|
     details = details.empty? ? "" : " " * just_space
-    hour = ""
-    if event[:end_date].is_a?(Date)
-      hour << event[:start_date].strftime("%H:%M") << " - " << event[:end_date].strftime("%H:%M")
-    end
-    details << hour.ljust(just_space, " ") << event[:title]
-    # puts "#{colorize_string(event[:calendar], details)} #{colorize_string('default', '(' << event[:id].to_s << ')')}"
+    details << get_hour_to_print(event, just_space) << event[:title]
+
+    puts "#{colorize_string(event[:calendar], details)} #{colorize_string('default', '(' << event[:id].to_s << ')')}"
   end
+end
+
+def get_hour_to_print(event, just_space)
+  hour = ""
+  if event[:end_date].is_a?(Date)
+    hour << event[:start_date].strftime("%H:%M") << " - " << event[:end_date].strftime("%H:%M")
+  end
+  hour.ljust(just_space, " ")
 end
 
 def colorize_string(color, description)
@@ -89,5 +93,7 @@ def colorize_string(color, description)
 end
 
 def update_color(calendar)
-  print calendar
+  color = @colors_avalible.shift
+  color = :default if color.nil?
+  @colors[calendar] = color
 end
