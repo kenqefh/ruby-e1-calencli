@@ -36,7 +36,8 @@ until opcion == "exit"
     list(year, week_munber)
 
   when "create"
-    create_event
+    event = input_event
+    create_event(event)
     # menu
   when "show"
     menu

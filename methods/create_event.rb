@@ -107,7 +107,7 @@ def input_event
   { year: current_year(d_start_end[:start_date]), num_week: current_week(d_start_end[:start_date]), h_event: h_event }
 end
 
-def create_event
+def create_event(input_event)
   event = input_event
   if @events.key?(:"#{event[:year]}")
     if @events[:"#{event[:year]}"].key?(:"#{event[:num_week]}")
