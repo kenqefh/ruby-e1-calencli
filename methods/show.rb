@@ -1,13 +1,13 @@
 # this method return the array by id example :
 # give id: 1 , return [id:1 , start_date : "12:00"....]
-
+@format_date = "%F"
+@justify_step = 12
+@date = "date"
 def find_by_id(id)
   @events.each_value do |weeks|
     weeks.each_value do |events|
       events.each do |item_events|
-        item_events.each_value do |item|
-          return item_events if item == id
-        end
+        return item_events if item_events[:id] == id
       end
     end
   end
@@ -47,10 +47,10 @@ end
 
 def show(id)
   data_select = find_by_id(id)
-  just_space = 12
   if data_select != ""
+    puts "#{print_key(@date, @justify_step)} : #{data_select[:start_date].strftime(@format_date)}"
     data_select.each do |x, y|
-      puts "#{print_key(x.to_s, just_space)} : #{print_value(y)}"
+      puts "#{print_key(x.to_s, 12)} : #{print_value(y)}" if x != :id
     end
   else
     ""
