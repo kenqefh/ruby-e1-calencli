@@ -2,68 +2,98 @@ require "date"
 require_relative "data"
 require "colorize"
 
-# Impot Ro
 require_relative "methods/create_event"
-# Import An
+require_relative "methods/update_event"
 
-# import Fr
 require_relative "methods/list"
 require_relative "methods/delete"
+
+require_relative "methods/show"
 
 # Variables
 @concurrent_date = DateTime.now
 
+def show_welcome
+  puts "-----------------------------Welcome to CalenCLI------------------------------\n\n"
+end
+
+def show_calencli
+  puts "#{'-' * 35}CalenCLI#{'-' * 35}\n\n"
+end
+
 # Menu
+# We have added the "exit" option, because we wanted to terminate the program
+# through this command
 def menu
-  puts "list | create | show | update | delete | next | prev | exit"
+  puts "-" * 78
+  puts "list | create | show | update | delete | next | prev | exit\n\n"
   print "action: "
   gets.chomp
 end
 
-# def create_events
+# Get week and year
+def get_year_week
+  params = []
+  params << @concurrent_date.year.to_s.to_sym
+  params << @concurrent_date.cweek.to_s.to_sym
+  params
+end
 
-# end
+def get_event_id
+  print "Event ID: "
+  gets.to_i
+end
 
+def update_concurrent_date(days)
+  @concurrent_date += days
+end
+
+def restart_concurrent_date
+  @concurrent_date = DateTime.now
+end
+
+# program
+show_welcome
+list(*get_year_week)
 opcion = nil
+
 until opcion == "exit"
   opcion = menu
 
   case opcion
   when "list"
-    week_munber = @concurrent_date.cweek.to_s.to_sym
-    year = @concurrent_date.year.to_s.to_sym
-    list(year, week_munber)
+    show_calencli
+    restart_concurrent_date
+    list(*get_year_week)
 
   when "create"
-    create_event
-    # menu
+    event = input_event
+    create_event(event)
+
   when "show"
-    menu
+    show(get_event_id)
 
   when "update"
-    menu
+    update(get_event_id)
 
   when "delete"
-    print "Event ID: "
-    delete(gets.chomp.to_i)
+    delete(get_event_id)
 
   when "next"
-    @concurrent_date += 7
-    week_munber = @concurrent_date.cweek.to_s.to_sym
-    year = @concurrent_date.year.to_s.to_sym
-    list(year, week_munber)
+    update_concurrent_date(7)
+    show_calencli
+    list(*get_year_week)
 
   when "prev"
-    @concurrent_date -= 7
-    week_munber = @concurrent_date.cweek.to_s.to_sym
-    year = @concurrent_date.year.to_s.to_sym
-    list(year, week_munber)
+    update_concurrent_date(-7)
+    show_calencli
+    list(*get_year_week)
 
   when "exit"
-    menu
+    puts "Bye!"
 
   else
-    menu
+    puts "Loading.."
 
   end
 end
