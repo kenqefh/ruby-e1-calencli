@@ -226,6 +226,15 @@ def cell_content_eval_event_size_long(event, title, space_index)
     print_cell(event[:calendar], title[0..9])
     event[:title] = title[10..]
   else
+    cell_content_eval_event_with_hour(event, title, space_index)
+  end
+end
+
+def cell_content_eval_event_with_hour(event, title, space_index)
+  if /^\d\d:\d\d/.match?(title)
+    print_cell(event[:calendar], title[0..4])
+    event[:title] = title[6..]
+  else
     print_cell(event[:calendar], title[0...space_index])
     event[:title] = title[(space_index + 1)..]
   end
