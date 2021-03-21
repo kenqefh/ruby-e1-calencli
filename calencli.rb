@@ -11,7 +11,7 @@ require_relative "methods/delete"
 require_relative "methods/show"
 
 # Variables
-@concurrent_date = DateTime.now
+@concurrent_date = DateTime.new(2020, 11, 3)
 
 def show_welcome
   puts "-----------------------------Welcome to CalenCLI------------------------------\n\n"
@@ -49,7 +49,7 @@ def update_concurrent_date(days)
 end
 
 def restart_concurrent_date
-  @concurrent_date = DateTime.now
+  @concurrent_date = DateTime.new(2020, 11, 3)
 end
 
 # program
